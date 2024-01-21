@@ -9,6 +9,7 @@ const createTokenAndSend = (res, statusCode, user) => {
   res.cookie("jwt", token, {
     expires: new Date(Date.now() + 30 * 24 * 60 * 1000),
     httpOnly: true,
+    sameSite: "None",
     // secure: true,
   });
 
@@ -16,6 +17,7 @@ const createTokenAndSend = (res, statusCode, user) => {
 
   res.status(statusCode).json({
     status: "success",
+    token,
     data: {
       user: newUser,
     },
@@ -24,6 +26,7 @@ const createTokenAndSend = (res, statusCode, user) => {
 
 const verifyToken = async (req, res, next) => {
   // const token = req.cookie.jwt;
+
   let token = "";
   if (
     req.headers.authorization &&

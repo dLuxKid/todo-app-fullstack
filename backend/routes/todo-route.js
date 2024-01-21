@@ -1,6 +1,11 @@
 const express = require("express");
 
-const { getTodos, createTodo } = require("../controllers/tour-controller");
+const {
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+} = require("../controllers/tour-controller");
 
 const { verifyToken } = require("../utils/token");
 
@@ -8,6 +13,9 @@ const router = express.Router();
 
 router.route("/").get(verifyToken, getTodos).post(verifyToken, createTodo);
 
-// router.route("/:todoId").get().patch().delete();
+router
+  .route("/:todoId")
+  .patch(verifyToken, updateTodo)
+  .delete(verifyToken, deleteTodo);
 
 module.exports = router;
